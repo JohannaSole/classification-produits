@@ -73,9 +73,10 @@ Plan :
 1. **Préparation des données** : import, prétraitement, split train/val/test.
 2. **Modèle de base** : simple MLP pour point de référence.
 3. **Modèles avancés** :
+   - CNN simple : ajout d’un réseau de neurones convolutionnel basique
    - EfficientNetB0.
    - **Data Augmentation**.
-4. **Évaluation des performances**.
+5. **Évaluation des performances**.
 
 ---
 
