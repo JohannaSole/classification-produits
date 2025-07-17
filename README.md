@@ -1,100 +1,49 @@
-# Projet 6 – Automatisation de la classification d'articles pour une marketplace
+# Automatisation de la classification d'articles pour une marketplace
 
-## 📌 Contexte
+## Contexte
 
-Vous êtes **Data Scientist** au sein de l’entreprise **"Place de marché"**, qui souhaite lancer une marketplace e-commerce anglophone.  
-Sur cette plateforme, les vendeurs proposent des articles aux acheteurs en postant une **photo** et une **description**.
+Classification automatique des articles d’une marketplace e-commerce anglophone à partir de leur image et description.  
+L’objectif est d’automatiser la catégorisation, actuellement réalisée manuellement par les vendeurs.
 
-Actuellement, l’attribution de la **catégorie d’un article** est effectuée **manuellement** par les vendeurs, ce qui est **peu fiable** et difficilement **scalable**.  
-Pour améliorer l’expérience utilisateur et préparer un passage à l’échelle, l’entreprise souhaite **automatiser cette tâche**.
+## Objectifs
 
-Linda, Lead Data Scientist, vous confie la mission suivante :
+### Étape 1 – Faisabilité à partir du texte  
+Notebook : `Sole_Johanna_1a_notebook_faisabilite_texte_042025.ipynb`  
 
-- Étudier la **faisabilité d’un moteur de classification automatique** des articles, à partir de **leur image et leur description**.
-- Réaliser ensuite une **classification supervisée** des images.
-- Enfin, collecter des données de nouveaux produits via l'**API OpenFoodFacts** et automatiser leur extraction.
+- Analyse des données textuelles (catégories, caractéristiques linguistiques)  
+- Prétraitement : nettoyage, normalisation, suppression des stopwords, lemmatisation  
+- Extraction de features : Bag-of-Words, TF-IDF, Word2Vec, BERT, Universal Sentence Encoder  
+- Réduction de dimension (PCA, t-SNE)  
+- Clustering (K-Means) et évaluation (Homogeneity, Completeness, V-Measure, Adjusted Rand Index, Silhouette Score)  
 
----
+### Étape 2 – Faisabilité à partir des images  
+Notebook : `Sole_Johanna_1b_notebook_faisabilite_images_042025.ipynb`  
 
-## 📝 Objectifs
+- Prétraitement et exploration des images  
+- Extraction de caractéristiques visuelles : SIFT + Bag of Visual Words, réseaux pré-entraînés (VGG16, ResNet50, EfficientNetB0)  
+- Réduction de dimension (PCA, t-SNE)  
+- Clustering (K-Means) et évaluation avec mêmes métriques que pour le texte  
 
-### Étape 1 – Étude de faisabilité à partir du texte
+### Étape 3 – Classification supervisée à partir des images  
+Notebook : `Sole_Johanna_2_notebook_classification_042025.ipynb`  
 
-Notebook : `Sole_Johanna_1a_notebook_faisabilite_texte_042025.ipynb`
+- Préparation des données : import, prétraitement, séparation train/validation/test  
+- Modèle simple : MLP  
+- Modèles avancés : CNN basique, EfficientNetB0, data augmentation  
+- Évaluation des performances  
 
-Ce notebook explore la faisabilité d’une classification automatique basée sur les **descriptions textuelles** des articles.
+### Étape 4 – Collecte de nouveaux produits via API OpenFoodFacts  
+Notebook : `Sole_Johanna_3_notebook_openfoodfacts_042025.ipynb`  
 
-Plan :
+- Collecte de produits liés au champagne via l’API OpenFoodFacts  
+- Extraction des 10 premiers produits dans un fichier CSV avec colonnes :  
+  - foodId  
+  - label  
+  - category  
+  - foodContentsLabel  
+  - image  
+- Script automatisé et reproductible  
 
-1. **Exploration des données textuelles** : analyse des catégories et caractéristiques linguistiques.
-2. **Prétraitement du texte** : nettoyage, normalisation, suppression des stopwords, lemmatisation.
-3. **Extraction de features** : 
-   - Bag-of-Words
-   - TF-IDF
-   - Word2Vec
-   - BERT
-   - Universal Sentence Encoder
-4. **Réduction de dimension et visualisation** (PCA, t-SNE).
-5. **Clustering et évaluation quantitative** :
-   - K-Means
-   - Homogeneity, Completeness, V-Measure, Adjusted Rand Index, Silhouette Score.
+## Résultat attendu
 
-👉 **But** : déterminer si le texte seul permet de regrouper les articles par catégorie.
-
----
-
-### Étape 2 – Étude de faisabilité à partir des images
-
-Notebook : `Sole_Johanna_1b_notebook_faisabilite_images_042025.ipynb`
-
-Ce notebook explore la faisabilité d’une classification automatique basée sur les **images** des articles.
-
-Plan :
-
-1. **Prétraitement et exploration des images**.
-2. **Extraction de caractéristiques visuelles** :
-   - SIFT + Bag of Visual Words
-   - Réseaux pré-entraînés : VGG16, ResNet50, EfficientNetB0.
-3. **Réduction de dimension et visualisation** (PCA, t-SNE).
-4. **Clustering et évaluation quantitative** (K-Means, mêmes métriques que pour le texte).
-
-👉 **But** : vérifier si les images permettent de différencier les catégories d’articles.
-
----
-
-### Étape 3 – Classification supervisée à partir des images
-
-Notebook : `Sole_Johanna_2_notebook_classification_042025.ipynb`
-
-Après avoir validé l’intérêt des features visuelles, ce notebook implémente une **classification supervisée**.
-
-Plan :
-
-1. **Préparation des données** : import, prétraitement, split train/val/test.
-2. **Modèle de base** : simple MLP pour point de référence.
-3. **Modèles avancés** :
-   - CNN simple : ajout d’un réseau de neurones convolutionnel basique
-   - EfficientNetB0.
-   - **Data Augmentation**.
-5. **Évaluation des performances**.
-
----
-
-### Étape 4 – Collecte de nouveaux produits via API OpenFoodFacts
-
-Notebook : `Sole_Johanna_3_notebook_openfoodfacts_042025.ipynb`
-
-Objectif :
-
-- Interroger l’**API OpenFoodFacts** pour collecter des produits liés au **champagne**.
-- Extraire les **10 premiers produits** dans un fichier `.csv` avec les colonnes :
-  - `foodId`
-  - `label`
-  - `category`
-  - `foodContentsLabel`
-  - `image`
-
-👉 Fournir un script automatisé reproductible.
-
----
-
+Automatisation fiable de la classification des articles par catégorie à partir du texte et des images, accompagnée d’une collecte automatisée de données produits via API.
